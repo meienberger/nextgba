@@ -23,9 +23,9 @@ export const playerTemplate = `
     EJS_color = "#0064ff";
     EJS_startOnLoaded = true;
     EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-    EJS_gameUrl = "/data/games/{{ gameName }}/{{ gameName }}.gba";
+    EJS_gameUrl = "/games/{{ gameName }}/{{ gameName }}.gba";
     {{#if saveState}}
-    EJS_loadStateURL = "/data/games/{{ gameName }}/saves/{{ saveState }}";
+    EJS_loadStateURL = "/games/{{ gameName }}/saves/{{ saveState }}";
     {{/if}}
 
     EJS_onSaveState = function(e) {window.parent.postMessage({type: "SAVE_STATE", payload: e}, "*")};

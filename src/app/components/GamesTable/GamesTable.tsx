@@ -13,14 +13,16 @@ import { PlayButton } from "./PlayButton";
 export const GamesTable = async () => {
   let list: string[] = [];
 
-  if (fs.existsSync("/data/games")) {
-    console.log("Reading games from /data/games");
-    list = await fs.promises.readdir("/data/games", {
-      withFileTypes: false,
-    });
-    console.log("Games found:", list);
+  const exists = await fs.promises
+    .access("./public/games")
+    .then(() => true)
+    .catch(() => false);
+
+  if (exists) {
+    await fs.promises.writeFile("app.log", "Games folder exists");
+    list = await fs.promises.readdir("./public/games");
   } else {
-    console.log("No games found in /data/games");
+    await fs.promises.writeFile("app.log", "Games folder does not exist");
   }
 
   return (

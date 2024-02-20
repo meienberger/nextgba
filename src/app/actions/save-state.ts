@@ -20,7 +20,7 @@ export const saveStateAction = action(
   input,
   async ({ gameId, state, screenshot }) => {
     try {
-      const basePath = `/data/games/${gameId}/saves`;
+      const basePath = `./public/games/${gameId}/saves`;
       const saveId = new Date().getTime();
 
       // Ensure base path exists

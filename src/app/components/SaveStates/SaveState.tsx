@@ -16,7 +16,7 @@ type Props = {
 
 export const SaveState = async ({ gameId }: Props) => {
   const exists = await fs.promises
-    .access(`/data/games/${gameId}/saves`)
+    .access(`./public/games/${gameId}/saves`)
     .then(() => true)
     .catch(() => false);
 
@@ -24,7 +24,7 @@ export const SaveState = async ({ gameId }: Props) => {
     return <div>No saves found for this game</div>;
   }
 
-  const list = await fs.promises.readdir(`/data/games/${gameId}/saves`);
+  const list = await fs.promises.readdir(`./public/games/${gameId}/saves`);
   const saves = list.filter((file) => file.endsWith(".state")).reverse();
 
   return (

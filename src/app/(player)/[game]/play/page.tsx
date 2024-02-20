@@ -12,14 +12,16 @@ export default async function Play({
 }) {
   const template = Handlebars.compile(playerTemplate);
   const savesFolderExists = await fs.promises
-    .access(`/data/games/${params.game}/saves/`)
+    .access(`./public/games/${params.game}/saves/`)
     .then(() => true)
     .catch(() => false);
 
   let saveStateList: string[] = [];
 
   if (savesFolderExists) {
-    const list = await fs.promises.readdir(`/data/games/${params.game}/saves/`);
+    const list = await fs.promises.readdir(
+      `./public/games/${params.game}/saves/`,
+    );
     saveStateList = list.filter((file) => file.endsWith(".state")).reverse();
   }
 

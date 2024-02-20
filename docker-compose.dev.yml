@@ -7,8 +7,9 @@ services:
       - "3000:3000"
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
     volumes:
+      - ./src:/app/src
       - ./data/games:/app/public/games

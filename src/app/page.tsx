@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { GamesTable } from "./components/GamesTable/GamesTable";
 
+export const dynamic = "force-dynamic";
+
 export default function Home() {
   return (
     <section>

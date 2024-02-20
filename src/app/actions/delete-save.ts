@@ -17,7 +17,7 @@ const input = z.object({
  */
 export const deleteSaveAction = action(input, async ({ gameId, saveId }) => {
   try {
-    const basePath = `/data/games/${gameId}/saves`;
+    const basePath = `./public/games/${gameId}/saves`;
 
     const statePath = path.join(basePath, `${saveId}.state`);
 
