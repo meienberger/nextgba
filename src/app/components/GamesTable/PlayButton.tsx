@@ -11,9 +11,15 @@ export const PlayButton = (props: Props) => {
   const { game } = props;
   const router = useRouter();
 
-  const onClick = () => {
-    router.push("/play?game=" + game);
-  };
-
-  return <Button onClick={onClick}>Play</Button>;
+  return (
+    <div className="flex gap-2 justify-end">
+      <Button variant="default" onClick={() => router.push(`/${game}/play`)}>
+        Play
+      </Button>
+      <Button variant="default" onClick={() => router.push(`/${game}/saves`)}>
+        Save States
+      </Button>
+      <Button variant="destructive">Delete</Button>
+    </div>
+  );
 };

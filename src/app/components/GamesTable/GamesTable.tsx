@@ -11,8 +11,17 @@ import {
 import { PlayButton } from "./PlayButton";
 
 export const GamesTable = async () => {
-  const list = await fs.promises.readdir("public/games");
-  const games = list.filter((game) => game.endsWith(".gba"));
+  let list: string[] = [];
+
+  if (fs.existsSync("/data/games")) {
+    console.log("Reading games from /data/games");
+    list = await fs.promises.readdir("/data/games", {
+      withFileTypes: false,
+    });
+    console.log("Games found:", list);
+  } else {
+    console.log("No games found in /data/games");
+  }
 
   return (
     <Table>
@@ -20,23 +29,18 @@ export const GamesTable = async () => {
       <TableHeader>
         <TableRow>
           <TableHead>Game</TableHead>
-          <TableHead>Save file</TableHead>
+          <TableHead className="text-right">Actions</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          {games.map((game) => (
-            <>
-              <TableCell key={game}>{game}</TableCell>
-              <TableCell className="font-bold">
-                {list.includes(game.replace(".gba", ".state")) ? "Yes" : "No"}
-              </TableCell>
-              <TableCell className="text-right">
-                <PlayButton game={game} />
-              </TableCell>
-            </>
-          ))}
-        </TableRow>
+        {list.map((game) => (
+          <TableRow key={game}>
+            <TableCell>{game}</TableCell>
+            <TableCell className="text-right">
+              <PlayButton game={game} />
+            </TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );

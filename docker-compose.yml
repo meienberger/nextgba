@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  nextgba:
+    container_name: nextgba
+    ports:
+      - "3000:3000"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      NODE_ENV: production
+    volumes:
+      - ./data:/data

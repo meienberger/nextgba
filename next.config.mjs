@@ -1,13 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "standalone",
+  reactStrictMode: true,
   experimental: {
     serverComponentsExternalPackages: ["handlebars"],
     serverActions: {
-      bodySizeLimit: "2mb",
+      bodySizeLimit: "20mb",
     },
-    // serverActions: {
-    //   bodySizeLimit: "2mb", // Set desired value here
-    // },
   },
 };
 
