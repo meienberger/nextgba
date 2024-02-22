@@ -11,4 +11,4 @@ services:
     environment:
       NODE_ENV: production
     volumes:
-      - ./data/games:/app/public/games
+      - ./data/games:/data/games

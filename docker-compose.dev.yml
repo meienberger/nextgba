@@ -12,4 +12,4 @@ services:
       NODE_ENV: development
     volumes:
       - ./src:/app/src
-      - ./data/games:/app/public/games
+      - ./data/games:/data/games

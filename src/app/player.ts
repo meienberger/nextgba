@@ -1,15 +1,26 @@
 export const playerTemplate = `
 <html>
+<head>
+<style>
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+</style>
 
 <body>
-  <div id="game"></div>
+  <div style="width: 100%; height: 100%; max-width: 100%;">
+    <div id="game"></div>
+  </div>
   <script>
     EJS_defaultOptions = {
       'save-state-location': 'keep in browser'
     };
 
     EJS_Buttons = {
-      loadState: false,
+      loadState: true,
       cheat: false,
       screenshot: false,
       cacheManager: false,
@@ -18,14 +29,15 @@ export const playerTemplate = `
     }
 
     EJS_player = "#game";
-    EJS_core = "gba";
+    EJS_core = "mgba";
     EJS_gameName = "{{ gameName }}";
     EJS_color = "#0064ff";
     EJS_startOnLoaded = true;
     EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
-    EJS_gameUrl = "/games/{{ gameName }}/{{ gameName }}.gba";
+    EJS_gameUrl = "/api/rom?gameId={{ gameId }}&console={{ console }}";
+
     {{#if saveState}}
-    EJS_loadStateURL = "/games/{{ gameName }}/saves/{{ saveState }}";
+    EJS_loadStateURL = "/api/save/file?gameId={{ gameId }}&saveId={{ saveState }}";
     {{/if}}
 
     EJS_onSaveState = function(e) {window.parent.postMessage({type: "SAVE_STATE", payload: e}, "*")};

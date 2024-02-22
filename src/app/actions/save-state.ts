@@ -12,15 +12,11 @@ const input = z.object({
   screenshot: z.string(),
 });
 
-/**
- * Given a username and password, logs in the user and returns a totpSessionId
- * if that user has 2FA enabled.
- */
 export const saveStateAction = action(
   input,
   async ({ gameId, state, screenshot }) => {
     try {
-      const basePath = `./public/games/${gameId}/saves`;
+      const basePath = `/data/games/${gameId}/saves`;
       const saveId = new Date().getTime();
 
       // Ensure base path exists
@@ -41,8 +37,6 @@ export const saveStateAction = action(
 
       return { success: true };
     } catch (e) {
-      console.error(`Error saving state for game ${gameId}`, e);
-
       throw new Error(`Error saving state for game ${gameId}`);
     }
   },

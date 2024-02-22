@@ -1,12 +1,14 @@
 "use client";
 
 import { saveStateAction } from "@/app/actions/save-state";
-
 import { useAction } from "next-safe-action/hooks";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import debounce from "lodash.debounce";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import IframeResizer from "iframe-resizer-react";
+import { Button } from "@/components/ui/button";
+import { Sidebar } from "../Sidebar/Sidebar";
 
 export type ProxyInstance = [string | undefined];
 
@@ -17,6 +19,7 @@ type Props = {
 
 export const Player = (props: Props) => {
   const { iframeSrc, gameId } = props;
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const saveMutation = useAction(saveStateAction, {
     onSuccess: () => {
@@ -56,30 +59,37 @@ export const Player = (props: Props) => {
     }
   };
 
-  const debouncedSaveGame = debounce(saveGame, 5000);
+  const debouncedSaveGame = debounce(saveGame, 500, {
+    leading: true,
+    trailing: false,
+  });
 
   useEffect(() => {
-    window.addEventListener("message", (event) => {
+    const handleMessage = (event: MessageEvent) => {
       if (event?.data?.type === "SAVE_STATE") {
         debouncedSaveGame(
           event.data.payload.state,
           event.data.payload.screenshot,
         );
       }
-    });
-
-    return () => {
-      console.log("Removing event listener");
-      window.removeEventListener("message", () => {});
     };
-  }, []);
+
+    window.addEventListener("message", handleMessage);
+    return () => {
+      window.removeEventListener("message", handleMessage);
+    };
+  }, [debouncedSaveGame]);
 
   return (
-    <AspectRatio ratio={16 / 9} className="bg-black rounded-xl">
+    <>
       <iframe
-        className="w-full h-full border-none overflow-hidden "
+        allowFullScreen
+        seamless
+        className="h-full absolute inset-0 z-10 "
         srcDoc={iframeSrc}
+        style={{ minWidth: "100%", width: "1px" }}
+        allow="Fullscreen; picture-in-picture;"
       />
-    </AspectRatio>
+    </>
   );
 };

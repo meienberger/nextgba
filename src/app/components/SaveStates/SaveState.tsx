@@ -1,4 +1,3 @@
-import fs from "fs";
 import {
   Card,
   CardContent,
@@ -7,29 +6,23 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import Image from "next/image";
-import Link from "next/link";
 import { DeleteSaveButton } from "./DeleteSaveButton";
+import { Button } from "@/components/ui/button";
 
 type Props = {
   gameId: string;
+  saveStates: string[];
+  onLoad: (saveId: string) => void;
 };
 
-export const SaveState = async ({ gameId }: Props) => {
-  const exists = await fs.promises
-    .access(`./public/games/${gameId}/saves`)
-    .then(() => true)
-    .catch(() => false);
-
-  if (!exists) {
+export const SaveState = ({ gameId, saveStates, onLoad }: Props) => {
+  if (saveStates.length === 0) {
     return <div>No saves found for this game</div>;
   }
 
-  const list = await fs.promises.readdir(`./public/games/${gameId}/saves`);
-  const saves = list.filter((file) => file.endsWith(".state")).reverse();
-
   return (
-    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
-      {saves.map((save) => (
+    <div className="grid gap-4 grid-cols-2">
+      {saveStates.map((save) => (
         <Card key={save}>
           <CardHeader>
             <CardDescription>
@@ -41,12 +34,20 @@ export const SaveState = async ({ gameId }: Props) => {
               alt="Save State"
               width={240}
               height={160}
-              src={`/games/${gameId}/saves/${save.replace(".state", ".png")}`}
-              className="w-full rounded-2xl shadow-xl"
+              src={`/api/save/image?gameId=${gameId}&saveId=${save.replace(".state", "")}`}
+              className="w-full rounded shadow-xl"
             />
           </CardContent>
           <CardFooter className="flex justify-between">
-            <Link href={`/${gameId}/play?save=${save}`}>Load</Link>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => {
+                onLoad(save.replace(".state", ""));
+              }}
+            >
+              Load
+            </Button>
             <DeleteSaveButton
               saveId={save.replace(".state", "")}
               gameId={gameId}

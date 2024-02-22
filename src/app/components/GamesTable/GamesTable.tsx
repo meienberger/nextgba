@@ -9,21 +9,28 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { PlayButton } from "./PlayButton";
+import { getGameMetadata, pathExists } from "@/lib/fs";
 
-export const GamesTable = async () => {
-  let list: string[] = [];
-
-  const exists = await fs.promises
-    .access("./public/games")
-    .then(() => true)
-    .catch(() => false);
+const findGames = async () => {
+  const exists = await pathExists("/data/games");
 
   if (exists) {
-    await fs.promises.writeFile("app.log", "Games folder exists");
-    list = await fs.promises.readdir("./public/games");
-  } else {
-    await fs.promises.writeFile("app.log", "Games folder does not exist");
+    const folders = await fs.promises.readdir("/data/games");
+
+    const metadata = await Promise.all(
+      folders.map(async (gameId) => {
+        return getGameMetadata(gameId);
+      }),
+    );
+
+    return metadata;
   }
+
+  return [];
+};
+
+export const GamesTable = async () => {
+  const games = await findGames();
 
   return (
     <Table>
@@ -35,14 +42,18 @@ export const GamesTable = async () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {list.map((game) => (
-          <TableRow key={game}>
-            <TableCell>{game}</TableCell>
-            <TableCell className="text-right">
-              <PlayButton game={game} />
-            </TableCell>
-          </TableRow>
-        ))}
+        {games.map((game) => {
+          if (!game) return null;
+
+          return (
+            <TableRow key={game.gameId}>
+              <TableCell>{game.name}</TableCell>
+              <TableCell className="text-right">
+                <PlayButton gameId={game.gameId} />
+              </TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );

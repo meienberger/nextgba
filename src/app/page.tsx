@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { GamesTable } from "./components/GamesTable/GamesTable";
+import { UploadGameDialog } from "./components/UploadGameDialog/UploadGameDialog";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +20,7 @@ export default function Home() {
               </p>
               <div className="flex justify-center w-full max-w-2xl gap-2 mx-auto mt-6">
                 <div className="mt-3 rounded-lg sm:mt-0">
-                  <Button>Upload a game</Button>
+                  <UploadGameDialog />
                 </div>
               </div>
             </div>

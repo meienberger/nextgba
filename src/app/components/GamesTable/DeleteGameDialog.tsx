@@ -7,32 +7,28 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 
 type Props = {
-  onClick: () => void;
+  open: boolean;
+  onOpenChange: (o: boolean) => void;
+  onDelete: () => void;
 };
 
-export const DeleteSaveDialog = ({ onClick }: Props) => {
+export const DeleteGameDialog = ({ open, onOpenChange, onDelete }: Props) => {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger>
-        <Button size="sm" variant="destructive">
-          Delete
-        </Button>
-      </AlertDialogTrigger>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete Save</AlertDialogTitle>
+          <AlertDialogTitle>Delete Game</AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription>
-          Are you sure you want to delete this save?
+          Are you sure you want to delete this game? All of your data will be
+          permanently removed. This action cannot be undone.
         </AlertDialogDescription>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-red-500" onClick={onClick}>
+          <AlertDialogAction className="bg-red-500" onClick={onDelete}>
             Delete
           </AlertDialogAction>
         </AlertDialogFooter>

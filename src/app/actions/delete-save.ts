@@ -11,13 +11,9 @@ const input = z.object({
   saveId: z.string(),
 });
 
-/**
- * Given a username and password, logs in the user and returns a totpSessionId
- * if that user has 2FA enabled.
- */
 export const deleteSaveAction = action(input, async ({ gameId, saveId }) => {
   try {
-    const basePath = `./public/games/${gameId}/saves`;
+    const basePath = `/data/games/${gameId}/saves`;
 
     const statePath = path.join(basePath, `${saveId}.state`);
 
@@ -28,8 +24,6 @@ export const deleteSaveAction = action(input, async ({ gameId, saveId }) => {
 
     return { success: true };
   } catch (e) {
-    console.error(`Error saving state for game ${gameId}`, e);
-
-    throw new Error(`Error saving state for game ${gameId}`);
+    throw new Error(`Error deleting save ${saveId} for game ${gameId}`);
   }
 });
