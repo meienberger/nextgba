@@ -1,10 +1,10 @@
 "use client";
 
-import { DeleteSaveDialog } from "@/app/(player)/[game]/saves/components/DeleteSaveDialog";
 import { deleteSaveAction } from "@/app/actions/delete-save";
 import { useAction } from "next-safe-action/hooks";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { DeleteSaveDialog } from "./DeleteSaveDialog";
 
 type Props = {
   gameId: string;
