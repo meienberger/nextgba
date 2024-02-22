@@ -2,13 +2,9 @@
 
 import { saveStateAction } from "@/app/actions/save-state";
 import { useAction } from "next-safe-action/hooks";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import debounce from "lodash.debounce";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import IframeResizer from "iframe-resizer-react";
-import { Button } from "@/components/ui/button";
-import { Sidebar } from "../Sidebar/Sidebar";
 
 export type ProxyInstance = [string | undefined];
 
@@ -19,7 +15,6 @@ type Props = {
 
 export const Player = (props: Props) => {
   const { iframeSrc, gameId } = props;
-  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   const saveMutation = useAction(saveStateAction, {
     onSuccess: () => {
