@@ -46,7 +46,7 @@ export default async function Play({
     <div className="bg-black h-full w-full absolute">
       <div className="relative h-full w-full">
         <Player iframeSrc={iframe} gameId={metadata.gameId} />;
-        <div className="flex absolute top-0 right-0 left-0 z-20 bg-transparent p-2 justify-center md:justify-start gap-2">
+        <div className="flex absolute top-0 right-0 left-0 z-20 pointer-events-none p-2 justify-center md:justify-start gap-2">
           <Sidebar gameId={metadata.gameId} saveStates={saveStateList} />
         </div>
       </div>

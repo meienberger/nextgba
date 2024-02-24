@@ -41,8 +41,21 @@ body, html {
     {{/if}}
 
     EJS_onSaveState = function(e) {window.parent.postMessage({type: "SAVE_STATE", payload: e}, "*")};
+
   </script>
   <script src="https://cdn.emulatorjs.org/stable/data/loader.js"></script>
+  <script>
+    window.addEventListener('message', async function(event) {
+      if (event.data.type === 'AUTO_SAVE_STATE') {
+        const gameManager = window.EJS_emulator.gameManager;
+
+        const state = gameManager.getState();
+        const screenshot = await gameManager.screenshot();
+
+        window.parent.postMessage({ type: 'AUTO_SAVE_STATE', payload: { state, screenshot } }, '*');
+      }
+    });
+  </script>
 </body>
 
 </html>

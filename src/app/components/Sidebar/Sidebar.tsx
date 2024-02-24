@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/components/ProxyProvider/useRouter";
 import { IconDeviceFloppy, IconHome } from "@tabler/icons-react";
 import { SaveStatesDialog } from "../SaveStates/SaveStatesDialog";
 import { useState } from "react";
@@ -18,7 +18,7 @@ export function Sidebar({ className, gameId, saveStates }: SidebarProps) {
   const router = useRouter();
 
   return (
-    <div className={cn("", className)}>
+    <div className={cn("pointer-events-auto", className)}>
       <div className="flex gap-2">
         <Button
           onClick={() => setOpen(true)}

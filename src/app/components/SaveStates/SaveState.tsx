@@ -26,7 +26,9 @@ export const SaveState = ({ gameId, saveStates, onLoad }: Props) => {
         <Card key={save}>
           <CardHeader>
             <CardDescription>
-              {new Date(Number(save.split(".")[0])).toLocaleString()}
+              {save === "auto"
+                ? "Auto save"
+                : new Date(Number(save.split(".")[0])).toLocaleString()}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -34,7 +36,7 @@ export const SaveState = ({ gameId, saveStates, onLoad }: Props) => {
               alt="Save State"
               width={240}
               height={160}
-              src={`/api/save/image?gameId=${gameId}&saveId=${save.replace(".state", "")}`}
+              src={`/api/save/image?gameId=${gameId}&saveId=${save.replace(".state", "")}&random=${Math.random()}`}
               className="w-full rounded shadow-xl"
             />
           </CardContent>

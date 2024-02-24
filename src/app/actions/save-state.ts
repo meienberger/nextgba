@@ -4,17 +4,17 @@ import { z } from "zod";
 import fs from "fs";
 import { action } from "@/lib/safe-action";
 import path from "path";
-import { revalidatePath } from "next/cache";
 
 const input = z.object({
   gameId: z.string(),
   state: z.string(),
   screenshot: z.string(),
+  auto: z.boolean(),
 });
 
 export const saveStateAction = action(
   input,
-  async ({ gameId, state, screenshot }) => {
+  async ({ gameId, state, screenshot, auto }) => {
     try {
       const basePath = `/data/games/${gameId}/saves`;
       const saveId = new Date().getTime();
@@ -30,12 +30,21 @@ export const saveStateAction = action(
       const screenshotBuffer = Buffer.from(screenshot, "base64");
 
       // Write the state to the file
-      await fs.promises.writeFile(statePath, stateBuffer);
-      await fs.promises.writeFile(screenshotPath, screenshotBuffer);
+      if (!auto) {
+        await fs.promises.writeFile(statePath, stateBuffer);
+        await fs.promises.writeFile(screenshotPath, screenshotBuffer);
+      }
 
-      revalidatePath(`/${gameId}/saves`);
+      await fs.promises.writeFile(
+        path.join(basePath, `auto.state`),
+        stateBuffer,
+      );
+      await fs.promises.writeFile(
+        path.join(basePath, `auto.png`),
+        screenshotBuffer,
+      );
 
-      return { success: true };
+      return { success: true, auto };
     } catch (e) {
       throw new Error(`Error saving state for game ${gameId}`);
     }
