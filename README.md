@@ -19,7 +19,7 @@ To get started simply create a docker-compose file with the following content:
 services:
   nextgba:
     container_name: nextgba
-    image: ghcr.io/meienberger/nextgba:v0.0.4
+    image: ghcr.io/meienberger/nextgba:latest
     ports:
       - 3000:3000
     volumes:
