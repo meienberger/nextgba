@@ -1,6 +1,6 @@
 # NextGBA - All you gameboy games in a browser window
 
-[![License](https://img.shields.io/github/license/meienberger/nextgba)](https://github.com/meienberger/nextgba/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/meienberger/nextgba)](https://github.com/meienberger/nextgba/blob/main/LICENSE)
 [![Version](https://img.shields.io/github/v/release/meienberger/nextgba?color=%235351FB&label=version)](https://github.com/meienberger/nextgba/releases)
 ![Issues](https://img.shields.io/github/issues/meienberger/nextgba)
 
