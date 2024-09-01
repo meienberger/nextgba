@@ -1,8 +1,12 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import type { GameMetadata } from "@/server/data";
+import { buttonVariants } from "./ui/button";
+import { Link } from "@remix-run/react";
+import { DeleteGameDialog } from "./delete-game-dialog";
 
 export const GamesTable = (props: { games: GameMetadata[] }) => {
   const { games } = props;
+
   return (
     <Table>
       <TableCaption>List of all your uploaded games</TableCaption>
@@ -19,7 +23,14 @@ export const GamesTable = (props: { games: GameMetadata[] }) => {
           return (
             <TableRow key={game.gameId}>
               <TableCell>{game.name}</TableCell>
-              <TableCell className="text-right">{/* <PlayButton gameId={game.gameId} /> */}</TableCell>
+              <TableCell className="text-right">
+                <div className="flex gap-2 justify-end">
+                  <Link className={buttonVariants()} to={`play/${game.gameId}`}>
+                    Play
+                  </Link>
+                  <DeleteGameDialog game={game} />
+                </div>
+              </TableCell>
             </TableRow>
           );
         })}

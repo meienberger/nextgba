@@ -99,3 +99,9 @@ export const uploadGame = async (params: { name: string; file: File }) => {
   // Create saves folder
   await fs.promises.mkdir(`${path}/saves`, { recursive: true });
 };
+
+export const deleteGame = async (gameId: string) => {
+  const path = `${BASE_PATH}/${gameId}`;
+
+  await fs.promises.rmdir(path, { recursive: true });
+};
