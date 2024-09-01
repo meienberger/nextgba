@@ -1,6 +1,7 @@
 import { notEmpty } from "@/lib/utils";
 import fs from "node:fs";
 import { z } from "zod";
+import slugify from "slugify";
 
 const BASE_PATH = process.env.NODE_ENV !== "production" ? "./games" : "/data/games";
 
@@ -67,4 +68,34 @@ export const getGameSaveStates = async (gameId: string) => {
   }
 
   return saveStateList;
+};
+
+export const uploadGame = async (params: { name: string; file: File }) => {
+  const errors: Record<string, string> = {};
+
+  const { name, file } = params;
+
+  const gameId = slugify(name).toLowerCase();
+  const gameConsole = file.name.split(".").pop();
+  const path = `${BASE_PATH}/${gameId}`;
+
+  if (await pathExists(path)) {
+    errors.name = "A game with that name already exists";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { success: false, errors };
+  }
+
+  // Create folder for game
+  await fs.promises.mkdir(path, { recursive: true });
+
+  // Save the file
+  await fs.promises.writeFile(`${path}/${gameId}.${gameConsole}`, new Uint8Array(await file.arrayBuffer()));
+
+  // Save the metadata
+  await fs.promises.writeFile(`${path}/metadata.json`, JSON.stringify({ name, gameId, console: gameConsole }));
+
+  // Create saves folder
+  await fs.promises.mkdir(`${path}/saves`, { recursive: true });
 };

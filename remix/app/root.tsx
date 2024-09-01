@@ -1,4 +1,5 @@
 import { Links, Meta, Outlet, Scripts } from "@remix-run/react";
+import { Toaster } from "react-hot-toast";
 
 import appStylesHref from "./tailwind.css?url";
 
@@ -16,6 +17,7 @@ export default function App() {
       <body>
         <Scripts />
         <Outlet />
+        <Toaster />
       </body>
     </html>
   );

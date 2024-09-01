@@ -1,4 +1,5 @@
 import { GamesTable } from "@/components/games-table";
+import { UploadGameDialog } from "@/components/upload-game-dialog";
 import { getGamesMetadata } from "@/server/data";
 import { json, useLoaderData } from "@remix-run/react";
 
@@ -26,7 +27,9 @@ export default function Index() {
                 Powered by <b>EmulatorJS</b>.
               </p>
               <div className="flex justify-center w-full max-w-2xl gap-2 mx-auto mt-6">
-                <div className="mt-3 rounded-lg sm:mt-0">{/* <UploadGameDialog /> */}</div>
+                <div className="mt-3 rounded-lg sm:mt-0">
+                  <UploadGameDialog />
+                </div>
               </div>
             </div>
           </div>
