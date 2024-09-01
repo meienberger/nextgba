@@ -2,6 +2,7 @@ import { notEmpty } from "@/lib/utils";
 import fs from "node:fs";
 import { z } from "zod";
 import slugify from "slugify";
+import path from "node:path";
 
 const BASE_PATH = process.env.NODE_ENV !== "production" ? "./games" : "/data/games";
 
@@ -104,4 +105,22 @@ export const deleteGame = async (gameId: string) => {
   const path = `${BASE_PATH}/${gameId}`;
 
   await fs.promises.rmdir(path, { recursive: true });
+};
+
+export const getRomFile = async (gameId: string, csl: string) => {
+  const file = fs.readFileSync(path.join(BASE_PATH, gameId, `${gameId}.${csl}`));
+
+  return file;
+};
+
+export const getSaveState = async (gameId: string, saveId: string) => {
+  const saveState = fs.readFileSync(path.join(BASE_PATH, gameId, "saves", `${saveId}.state`));
+
+  return saveState;
+};
+
+export const getSaveImage = async (gameId: string, saveId: string) => {
+  const image = fs.readFileSync(path.join(BASE_PATH, gameId, "saves", `${saveId}.png`));
+
+  return image;
 };
