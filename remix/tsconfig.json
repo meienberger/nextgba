@@ -30,7 +30,7 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "~/*": [
+      "@/*": [
         "./app/*"
       ]
     },

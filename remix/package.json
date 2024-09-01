@@ -12,14 +12,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
     "@remix-run/express": "^2.11.2",
     "@remix-run/node": "^2.11.2",
     "@remix-run/react": "^2.11.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
     "cross-env": "^7.0.3",
     "express": "^4.19.2",
+    "handlebars": "^4.7.8",
     "isbot": "4",
+    "lucide-react": "^0.437.0",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.5.2",
+    "tailwindcss-animate": "^1.0.7",
+    "tiny-invariant": "^1.3.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
