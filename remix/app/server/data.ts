@@ -124,3 +124,48 @@ export const getSaveImage = async (gameId: string, saveId: string) => {
 
   return image;
 };
+
+export const saveGame = async (params: { gameId: string; state: string; screenshot: string; auto: boolean }) => {
+  const { gameId, state, screenshot, auto } = params;
+
+  try {
+    const basePath = path.join(BASE_PATH, gameId, "saves");
+    const saveId = new Date().getTime();
+
+    // Ensure base path exists
+    await fs.promises.mkdir(basePath, { recursive: true });
+
+    const statePath = path.join(basePath, `${saveId}.state`);
+    const screenshotPath = path.join(basePath, `${saveId}.png`);
+
+    // Convert the state to a uint8 array
+    const stateBuffer = Buffer.from(state, "base64");
+    const screenshotBuffer = Buffer.from(screenshot, "base64");
+
+    // Write the state to the file
+    if (!auto) {
+      await fs.promises.writeFile(statePath, stateBuffer);
+      await fs.promises.writeFile(screenshotPath, screenshotBuffer);
+    }
+
+    await fs.promises.writeFile(path.join(basePath, `auto.state`), stateBuffer);
+    await fs.promises.writeFile(path.join(basePath, `auto.png`), screenshotBuffer);
+
+    return { success: true, auto };
+  } catch (e) {
+    throw new Error(`Error saving state for game ${gameId}`);
+  }
+};
+
+export const deleteSave = async (params: { gameId: string; saveId: string }) => {
+  const { gameId, saveId } = params;
+  try {
+    const basePath = path.join(BASE_PATH, gameId, "saves");
+    const statePath = path.join(basePath, `${saveId}.state`);
+
+    // Delete the state file
+    await fs.promises.unlink(statePath);
+  } catch (e) {
+    throw new Error(`Error deleting save ${saveId} for game ${gameId}`);
+  }
+};

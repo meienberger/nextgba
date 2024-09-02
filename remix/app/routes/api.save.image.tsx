@@ -1,7 +1,7 @@
-import type { ActionFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs } from "@remix-run/node";
 import { getSaveImage } from "@/server/data";
 
-export async function loader({ request }: ActionFunctionArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   try {
     const { searchParams } = new URL(request.url);
     const gameId = searchParams.get("gameId");

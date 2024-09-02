@@ -2,12 +2,15 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button, buttonVariants } from "./ui/button";
 import { useFetcher } from "@remix-run/react";
 import { useEffect, useState } from "react";
-import type { GameMetadata } from "@/server/data";
 import { z } from "zod";
 import toast from "react-hot-toast";
 
-export const DeleteGameDialog = (props: { game: GameMetadata }) => {
-  const { game } = props;
+type Props = {
+  saveId: string;
+};
+
+export const DeleteSaveStateDialog = (props: Props) => {
+  const { saveId } = props;
   const [open, setOpen] = useState(false);
 
   const fetcher = useFetcher();
@@ -17,26 +20,24 @@ export const DeleteGameDialog = (props: { game: GameMetadata }) => {
 
   useEffect(() => {
     if (res?.success) {
+      toast.success("Save state deleted successfully");
       setOpen(false);
-      toast.success("Game deleted successfully");
     }
   }, [res?.success]);
 
   return (
     <Dialog open={open} onOpenChange={(o) => setOpen(o)}>
       <DialogTrigger>
-        <div className={buttonVariants({ variant: "destructive" })}>Delete</div>
+        <div className={buttonVariants({ variant: "destructive", size: "sm" })}>Delete</div>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{`Delete game ${game.name}?`}</DialogTitle>
-          <DialogDescription>
-            Are you sure you want to delete this game? All of your data will be permanently removed. This action cannot be undone.
-          </DialogDescription>
+          <DialogTitle>Delete save state?</DialogTitle>
+          <DialogDescription>Are you sure you want to delete this save? You won't be able to recover it.</DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <fetcher.Form action="delete-game" method="post">
-            <input type="hidden" name="gameId" value={game.gameId} />
+          <fetcher.Form action="delete-save" method="post">
+            <input type="hidden" name="saveId" value={saveId} />
             <Button variant="destructive" type="submit" disabled={isSubmitting} aria-disabled={isSubmitting}>
               Delete
             </Button>
