@@ -9,7 +9,10 @@ import { useRevalidate } from "@/hooks/use-revalidate";
 import Iframe from "./iframe";
 import { useFetcher } from "@remix-run/react";
 
-export const GamePlayer = (props: { metadata: GameMetadata; saveStateToLoad: string }) => {
+export const GamePlayer = (props: {
+  metadata: GameMetadata;
+  saveStateToLoad: string;
+}) => {
   const { metadata, saveStateToLoad } = props;
 
   const revalidate = useRevalidate();
@@ -52,28 +55,9 @@ export const GamePlayer = (props: { metadata: GameMetadata; saveStateToLoad: str
         {
           action: `/play/${metadata.gameId}/save`,
           method: "POST",
+          encType: "application/json",
         },
       );
-
-      // const res = await fetch(`/play/${metadata.gameId}/save`, {
-      //   method: "POST",
-      //   body: JSON.stringify({
-      //     state: base64save,
-      //     screenshot: base64screenshot,
-      //     auto,
-      //     gameId: metadata.gameId,
-      //   }),
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
-
-      // if (!res.ok) {
-      //   toast.error("Failed to save game");
-      // } else {
-      //   toast.success("Game saved");
-      //   revalidate();
-      // }
     } catch (e) {
       console.error(e);
     }

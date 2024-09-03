@@ -5,7 +5,7 @@ FROM node:${NODE_VERSION}-alpine${ALPINE_VERSION} AS node_base
 
 FROM node_base AS builder_base
 
-RUN npm install pnpm -g
+RUN npm install pnpm@9 -g
 
 # BUILDER
 FROM builder_base AS builder

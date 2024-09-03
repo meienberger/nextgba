@@ -125,7 +125,12 @@ export const getSaveImage = async (gameId: string, saveId: string) => {
   return image;
 };
 
-export const saveGame = async (params: { gameId: string; state: string; screenshot: string; auto: boolean }) => {
+export const saveGame = async (params: {
+  gameId: string;
+  state: string;
+  screenshot: string;
+  auto: boolean;
+}) => {
   const { gameId, state, screenshot, auto } = params;
 
   try {
@@ -148,8 +153,8 @@ export const saveGame = async (params: { gameId: string; state: string; screensh
       await fs.promises.writeFile(screenshotPath, screenshotBuffer);
     }
 
-    await fs.promises.writeFile(path.join(basePath, `auto.state`), stateBuffer);
-    await fs.promises.writeFile(path.join(basePath, `auto.png`), screenshotBuffer);
+    await fs.promises.writeFile(path.join(basePath, "auto.state"), stateBuffer);
+    await fs.promises.writeFile(path.join(basePath, "auto.png"), screenshotBuffer);
 
     return { success: true, auto };
   } catch (e) {
@@ -157,7 +162,10 @@ export const saveGame = async (params: { gameId: string; state: string; screensh
   }
 };
 
-export const deleteSave = async (params: { gameId: string; saveId: string }) => {
+export const deleteSave = async (params: {
+  gameId: string;
+  saveId: string;
+}) => {
   const { gameId, saveId } = params;
   try {
     const basePath = path.join(BASE_PATH, gameId, "saves");

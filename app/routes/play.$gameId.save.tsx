@@ -6,15 +6,14 @@ import { z } from "zod";
 const input = z.object({
   state: z.string(),
   screenshot: z.string(),
-  auto: z.coerce.boolean(),
+  auto: z.boolean(),
 });
 
 export async function action({ request, params }: ActionFunctionArgs) {
   try {
     invariant(params.gameId, "Missing gameId param");
 
-    const formData = await request.formData();
-    const body = Object.fromEntries(formData);
+    const body = await request.json();
 
     const data = input.parse(body);
 
