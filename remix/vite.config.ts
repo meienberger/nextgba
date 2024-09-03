@@ -12,9 +12,4 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./app"),
-    },
-  },
 });

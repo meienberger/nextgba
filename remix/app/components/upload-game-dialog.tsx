@@ -10,7 +10,7 @@ export const UploadGameDialog = () => {
   const [open, setOpen] = useState(false);
 
   const fetcher = useFetcher();
-  const isSubmitting = fetcher.state === "submitting";
+  const isSubmitting = fetcher.state !== "idle";
 
   const res = z
     .object({ errors: z.record(z.string()), success: z.boolean() })

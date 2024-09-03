@@ -14,7 +14,7 @@ export const DeleteSaveStateDialog = (props: Props) => {
   const [open, setOpen] = useState(false);
 
   const fetcher = useFetcher();
-  const isSubmitting = fetcher.state === "submitting";
+  const isSubmitting = fetcher.state !== "idle";
 
   const res = z.object({ success: z.boolean() }).or(z.undefined()).parse(fetcher.data);
 
