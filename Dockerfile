@@ -22,7 +22,6 @@ RUN pnpm install -r --prefer-offline
 COPY ./app ./app
 COPY ./tsconfig.json ./tsconfig.json
 COPY ./vite.config.ts ./vite.config.ts
-COPY ./public ./public
 COPY ./tailwind.config.ts ./tailwind.config.ts
 COPY ./postcss.config.js ./postcss.config.js
 COPY ./components.json ./components.json
@@ -34,7 +33,6 @@ FROM node_base AS app
 ENV NODE_ENV production
 
 WORKDIR /app
-
 
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/package.json ./package.json

@@ -9,7 +9,8 @@
     "dev": "remix vite:dev",
     "build": "npx remix vite:build",
     "start": "npx remix-serve ./build/server/index.js",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "prod": "docker compose up"
   },
   "keywords": [],
   "author": "",
@@ -19,9 +20,9 @@
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-scroll-area": "^1.1.0",
     "@radix-ui/react-slot": "^1.1.0",
-    "@remix-run/node": "^2.11.2",
-    "@remix-run/react": "^2.11.2",
-    "@remix-run/serve": "^2.11.2",
+    "@remix-run/node": "^2.12.1",
+    "@remix-run/react": "^2.12.1",
+    "@remix-run/serve": "^2.12.1",
     "@tabler/icons-react": "^3.14.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
